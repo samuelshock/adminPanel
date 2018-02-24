@@ -20,12 +20,8 @@ export class SettingsService {
   loadAdjustment() {
     if (localStorage.getItem('user_adjustment')) {
       this.adjustment = JSON.parse(localStorage.getItem('user_adjustment'));
-      this.applyThemeLocal(this.adjustment.theme);
-      console.log('Cargado del localStorage');
-    } else {
-      console.log('Usando valores por defecto');
-      this.applyThemeLocal(this.adjustment.theme);
     }
+    this.applyThemeLocal(this.adjustment.theme);
   }
 
   applyThemeLocal( theme: string) {
