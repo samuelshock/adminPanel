@@ -90,4 +90,15 @@ export class UserService {
 
   }
 
+  updateUser( user: User) {
+
+    let url = `${ URL_SERVICES }/user/${ user._id }?token=${ this.token }`;
+    return this.http.put(url, user)
+      .map( (res: any) => {
+        this.saveInStorage(res.user._id, this.token, res.user);
+        swal('User Updated', user.name, 'success');
+        return true;
+      });
+  }
+
 }
