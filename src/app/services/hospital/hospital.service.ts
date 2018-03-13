@@ -58,4 +58,9 @@ export class HospitalService {
       });
   }
 
+  obtenerHospital( id: string) {
+    let url = `${ URL_SERVICES }/hospital/${ id }`;
+    return this.http.get(url).map( (res: any) => res.hospital);
+  }
+
 }
