@@ -13,6 +13,7 @@ export class UserService {
 
   user: User;
   token: string;
+  menu: any[] = [];
 
   constructor(
     public http: HttpClient,
@@ -22,21 +23,24 @@ export class UserService {
     this.loadStorage();
    }
 
-  saveInStorage( id: string, token: string, user: User) {
+  saveInStorage( id: string, token: string, user: User, menu: any) {
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
-
+    localStorage.setItem('menu', JSON.stringify(menu || []));
     this.user = user;
     this.token = token;
+    this.menu = menu;
   }
 
   logout() {
     this.user = null;
     this.token = '';
+    this.menu = [];
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('menu');
 
     this.router.navigate(['/login']);
   }
@@ -47,7 +51,7 @@ export class UserService {
 
     return this.http.post(url, { token })
       .map( (res: any) => {
-        this.saveInStorage(res.id, res.token, res.user);
+        this.saveInStorage(res.id, res.token, res.user, res.menu);
         return true;
       });
   }
@@ -55,10 +59,12 @@ export class UserService {
   loadStorage() {
     if (localStorage.getItem('token')) {
       this.user = JSON.parse(localStorage.getItem('user'));
+      this.menu = JSON.parse(localStorage.getItem('menu'));
       this.token = localStorage.getItem('token');
     } else {
       this.token = '';
       this.user = null;
+      this.menu = [];
     }
   }
 
@@ -77,7 +83,7 @@ export class UserService {
 
     return this.http.post(url, user)
       .map( (res: any) => {
-        this.saveInStorage(res.id, res.token, res.user);
+        this.saveInStorage(res.id, res.token, res.user, res.menu);
         return true;
       });
   }
@@ -101,7 +107,7 @@ export class UserService {
 
         if ( user._id === this.user._id) {
           let userDB: User = res.user;
-          this.saveInStorage(userDB._id, this.token, userDB);
+          this.saveInStorage(userDB._id, this.token, userDB, this.menu);
         }
 
         swal('User Updated', user.name, 'success');
@@ -114,7 +120,7 @@ export class UserService {
     .then( (res: any) => {
       this.user.img = res.usuarios.img;
       swal('Image Updated', this.user.name, 'success');
-      this.saveInStorage(id, this.token, this.user);
+      this.saveInStorage(id, this.token, this.user, this.menu);
     })
     .catch( err => {
       console.error(err);

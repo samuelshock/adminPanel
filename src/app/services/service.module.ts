@@ -11,7 +11,8 @@ import {
   LoginGuardGuard,
   UploadFileService,
   HospitalService,
-  MedicoService
+  MedicoService,
+  AdminGuard
 } from './service.index';
 
 @NgModule({
@@ -28,7 +29,8 @@ import {
     UploadFileService,
     ModalUploadService,
     HospitalService,
-    MedicoService
+    MedicoService,
+    AdminGuard
   ],
   declarations: []
 })

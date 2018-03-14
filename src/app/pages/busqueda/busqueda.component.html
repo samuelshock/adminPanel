@@ -1,0 +1,47 @@
+<div class="row animated fadeIn">
+    <div class="col-4" *ngIf="users.length > 0">
+        <div class="card">
+            <div class="card-title">Usuarios</div>
+            <table class="table table-hover">
+                <tbody>
+                    <tr *ngFor="let user of users" class="pointer" [routerLink]="['/usuarios']">
+                        <td class="w70">
+                            <img [src]="user.img | image" class="img-50 img-circle">
+                        </td>
+                        <td>{{ user.name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-4" *ngIf="medicos.length > 0">
+        <div class="card">
+            <div class="card-title">Medicos</div>
+            <table class="table table-hover">
+                <tbody>
+                    <tr *ngFor="let medico of medicos" class="pointer" [routerLink]="['/medico', medico._id]">
+                        <td class="w70">
+                            <img [src]="medico.img | image:'medico'" class="img-50 img-circle">
+                        </td>
+                        <td>{{ medico.nombre }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-4" *ngIf="hospitales.length > 0">
+        <div class="card">
+            <div class="card-title">Hospitales</div>
+            <table class="table table-hover">
+                <tbody>
+                    <tr *ngFor="let hospital of hospitales" class="pointer" [routerLink]="['/hospitales']">
+                        <td class="w70">
+                            <img [src]="hospital.img | image:'hospital'" class="img-50 img-circle">
+                        </td>
+                        <td>{{hospital.nombre}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
