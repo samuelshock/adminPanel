@@ -4,8 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { URL_SERVICES } from '../../config/config';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { Router } from '@angular/router';
 import { UploadFileService } from '../upload-file/upload-file.service';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -85,6 +87,10 @@ export class UserService {
       .map( (res: any) => {
         this.saveInStorage(res.id, res.token, res.user, res.menu);
         return true;
+      })
+      .catch( (err: any) => {
+        swal('Error en el login', err.error.message, 'error');
+        return Observable.throw(err);
       });
   }
 
@@ -95,8 +101,13 @@ export class UserService {
       .map( (res: any) => {
         swal('User Created', user.email, 'success');
         return res.user;
+      })
+      .catch( (err: any) => {
+        // una alternativa es crear un servicio de menejo de errores
+        // este guarde en un log y mandar al server backend
+        swal(err.error.message, err.error.error.message, 'error');
+        return Observable.throw(err);
       });
-
   }
 
   updateUser( user: User) {
@@ -112,6 +123,12 @@ export class UserService {
 
         swal('User Updated', user.name, 'success');
         return true;
+      })
+      .catch( (err: any) => {
+        // una alternativa es crear un servicio de menejo de errores
+        // este guarde en un log y mandar al server backend
+        swal(err.error.message, err.error.error.message, 'error');
+        return Observable.throw(err);
       });
   }
 
