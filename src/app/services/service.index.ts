@@ -1,6 +1,7 @@
 // Guards
 export { AdminGuard } from './guards/admin.guard';
 export { LoginGuardGuard } from './guards/login-guard.guard';
+export { VerifyTokenGuard } from './guards/verify-token.guard';
 
 export { MedicoService } from './medico/medico.service';
 export { HospitalService } from './hospital/hospital.service';
